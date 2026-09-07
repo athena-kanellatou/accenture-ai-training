@@ -1,0 +1,50 @@
+services:
+  db:
+    image: postgres:16-alpine
+    container_name: langfuse-postgres
+    restart: always
+    environment:
+      POSTGRES_USER: gtgh
+      POSTGRES_PASSWORD: "ghgt#C0d3"
+      POSTGRES_DB: langfuse
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U gtgh -d langfuse"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  langfuse:
+    image: langfuse/langfuse:2
+    container_name: langfuse-app
+    restart: always
+    depends_on:
+      db:
+        condition: service_healthy
+    ports:
+      - "3002:3000"
+    environment:
+      DATABASE_URL: "postgresql://gtgh:ghgt%23C0d3@db:5432/langfuse"
+      NEXTAUTH_URL: "http://localhost:3002"
+      NEXTAUTH_SECRET: "my-super-secret-nextauth-key-12345"
+      SALT: "my-super-secret-salt-12345"
+      ENCRYPTION_KEY: "0000000000000000000000000000000000000000000000000000000000000000"
+      TELEMETRY_ENABLED: "false"
+
+  grafana:
+    image: grafana/grafana-enterprise:latest
+    container_name: grafana-app
+    restart: always
+    depends_on:
+      db:
+        condition: service_healthy
+    ports:
+      - "3001:3001"
+    environment:
+      GF_SECURITY_ADMIN_USER: gtgh
+      GF_SECURITY_ADMIN_PASSWORD: "ghgt#C0d3"
+      GF_SERVER_HTTP_PORT: 3001
+
+volumes:
+  postgres_data:

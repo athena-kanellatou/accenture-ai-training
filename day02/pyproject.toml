@@ -1,0 +1,20 @@
+[project]
+name = "day02"
+version = "0.1.0"
+description = "Minimal Azure OpenAI chat client built with LangChain"
+readme = "README.md"
+authors = [
+    { name = "Athena Kanellatou", email = "kanellatouathina@gmail.com" }
+]
+requires-python = ">=3.12"
+dependencies = [
+    "langchain-openai>=1.6.0",
+    "python-dotenv>=1.2.3",
+]
+
+[project.scripts]
+day02 = "day02:main"
+
+[build-system]
+requires = ["uv_build>=0.12.8,<0.13.0"]
+build-backend = "uv_build"

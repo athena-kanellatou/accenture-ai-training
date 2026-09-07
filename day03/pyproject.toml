@@ -1,0 +1,28 @@
+[project]
+name = "day03"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+authors = [
+    { name = "Athena Kanellatou", email = "kanellatouathina@gmail.com" }
+]
+requires-python = ">=3.12"
+dependencies = [
+    "langchain>=1.3.18",
+    "langchain-core>=1.6.1",
+    "langchain-openai>=1.6.0",
+    "langgraph>=1.2.11",
+    "pydantic>=2.13.5",
+    "python-dotenv>=1.2.3",
+]
+
+[project.scripts]
+day03-state = "day03.state_nodes_edges:main"
+day03 = "day03:main"
+day03-prompt = "day03.prompt_chain:main"
+day03-tools = "day03.tool_calling:main"
+day03-structured = "day03.structured_output:main"
+
+[build-system]
+requires = ["uv_build>=0.12.8,<0.13.0"]
+build-backend = "uv_build"
